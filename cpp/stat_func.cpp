@@ -1,32 +1,32 @@
 #include <header/sfdafx.h>
-#include <header/stat.h>
+#include <header/stat_func.h>
 
-void EnpSrc_stat(Enp_HashMap & Enp_HM, string key, struct pcap_pkthdr* cap_pac)
+void EnpSrc_stat(Enp_HashMap & Enp_HM, string key, uint pac_len)
 {
     if(!Enp_HM.count(key)){//"count()" is more convenient than "find()"!
         Enp_HM[key] = vector <uint32_t> {0,0,0,0};
         Enp_HM[key][0]+= 1;
-        Enp_HM[key][1]+= cap_pac->len;
+        Enp_HM[key][1]+= pac_len;
     }
     else {
 
         Enp_HM[key][0]+= 1;
-        Enp_HM[key][1]+= cap_pac->len;
+        Enp_HM[key][1]+= pac_len;
     }
 }
-void EnpDst_stat(Enp_HashMap & Enp_HM, string key, struct pcap_pkthdr* cap_pac)
+void EnpDst_stat(Enp_HashMap & Enp_HM, string key, uint pac_len) //struct pcap_pkthdr* cap_pac
 {
     if(!Enp_HM.count(key)){
         Enp_HM[key] = vector <uint32_t> {0,0,0,0};
         Enp_HM[key][2]+= 1;
-        Enp_HM[key][3]+= cap_pac->len;
+        Enp_HM[key][3]+= pac_len;
     }
     else {
         Enp_HM[key][2]+= 1;
-        Enp_HM[key][3]+= cap_pac->len;
+        Enp_HM[key][3]+= pac_len;
     }
 }
-void Cov_stat(Cov_HashMap & Cov_HM, string A, string B, struct pcap_pkthdr* cap_pac)
+void Cov_stat(Cov_HashMap & Cov_HM, string A, string B, uint pac_len)
 {
     key_pair kp_sd = key_pair(A,B);
 //    cout << kp_sd.first <<" "<< kp_sd.second<<endl;
@@ -37,15 +37,15 @@ void Cov_stat(Cov_HashMap & Cov_HM, string A, string B, struct pcap_pkthdr* cap_
     if (check_sd == 0 && check_ds ==0){
         Cov_HM[kp_sd] = vector <uint32_t> {0,0,0,0};
         Cov_HM[kp_sd][0]+= 1;
-        Cov_HM[kp_sd][1]+= cap_pac->len;
+        Cov_HM[kp_sd][1]+= pac_len;
     }
     else if(check_sd != 0 && check_ds == 0){
         Cov_HM[kp_sd][0]+= 1;
-        Cov_HM[kp_sd][1]+= cap_pac->len;
+        Cov_HM[kp_sd][1]+= pac_len;
     }
     else{ //(check_sd == 0 && check_ds != 0)
             Cov_HM[kp_ds][2]+= 1;
-            Cov_HM[kp_ds][3]+= cap_pac->len;
+            Cov_HM[kp_ds][3]+= pac_len;
     }
 }
 void stat_print(Enp_HashMap Enp_HM, Cov_HashMap Cov_HM){
@@ -118,3 +118,36 @@ void intro(){
     cout << "5. exit"<<endl;
 
 }
+
+//old-pattern
+//  unordered_map<string,list<uint32_t>>::itervhr it; //or auto it = m.begin();
+//    for (it =Enp_HM.begin(); it!= Enp_HM.end(); it++){
+//     cout << it->first<<"" <<it->secound <<endl;
+//}
+
+ //    for (int i=0;i<ip_lst.size();i++) {
+//        ip_lst[0];
+//    }
+
+//      cout<<ip_lst.size()<<endl;
+
+//    for (it=ip_lst.begin(); it != ip_lst.end(); ++it)
+//    {
+//        cout << *it << endl;
+//    }
+
+//    for (int i=0;i<4;i++) {
+//    cout << Enp_HM["172.30.1.48"][i] <<endl;
+//    }
+
+//new-pattern
+//for (pair<string,vector<uint32_t>> vhm: Enp_HM) {
+//       cout << vhm.first << vhm. <<endl;
+//}
+
+    //         for (it= ip_lst.begin(); it != ip_lst.end();it++)
+    //         {
+    //             printf("%s \n",(*it).c_str());
+
+    //         }
+

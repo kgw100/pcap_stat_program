@@ -2,8 +2,8 @@
 
 
 void usage() {
-  printf("syntax: pcap_stat <pcap file name> \n");
-  printf("sample: pcap_stat pcap_file_test.pcap \n");
+  printf("syntax: pcap_stat_dep <pcap file name> \n");
+  printf("sample: pcap_stat_dep pcap_file_test.pcap \n");
 }
 void tohex(const u_char * in, size_t insz, char * out, size_t outsz)
 {

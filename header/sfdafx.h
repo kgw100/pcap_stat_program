@@ -32,7 +32,6 @@ struct pair_hash {
     }
 };
 
-
 using key_pair = pair<string,string>;
 using Enp_HashMap = unordered_map<string,vector<uint32_t>>;
 using Cov_HashMap = unordered_map<key_pair,vector<uint32_t>,pair_hash>;
