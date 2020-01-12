@@ -20,7 +20,7 @@
 
 >  Statustucs of Endpoint(ethernet, ipv4) and Conversation (ethernet, ipv4) 
 
-![pcap_stat_demo](C:\Users\rlaru\Desktop\git_hub 이미지\pcap_stat_program\pcap_stat_demo.gif)
+![pcap_stat_demo](./pcap_stat_demo.gif)
 
 ### Getting Started
 
