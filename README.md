@@ -20,7 +20,7 @@
 
 >  Statustucs of Endpoint(ethernet, ipv4) and Conversation (ethernet, ipv4) 
 
-![pcap_stat_demo](./pcap_stat_demo.gif)
+![pcap_stat_demo](./pcap_stat_demo.gif){: width="100%" height="100%"}
 
 ### Getting Started
 
