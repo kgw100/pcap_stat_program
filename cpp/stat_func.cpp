@@ -29,7 +29,6 @@ void EnpDst_stat(Enp_HashMap & Enp_HM, string key, uint pac_len) //struct pcap_p
 void Cov_stat(Cov_HashMap & Cov_HM, string A, string B, uint pac_len)
 {
     key_pair kp_sd = key_pair(A,B);
-//    cout << kp_sd.first <<" "<< kp_sd.second<<endl;
     key_pair kp_ds = key_pair(B,A);
     uint8_t check_sd = Cov_HM.count(kp_sd);
     uint8_t check_ds = Cov_HM.count(kp_ds);
@@ -48,7 +47,7 @@ void Cov_stat(Cov_HashMap & Cov_HM, string A, string B, uint pac_len)
             Cov_HM[kp_ds][3]+= pac_len;
     }
 }
-void stat_print(Enp_HashMap Enp_HM, Cov_HashMap Cov_HM){
+[[noreturn]]void stat_print(Enp_HashMap Enp_HM, Cov_HashMap Cov_HM){
     int num;
     intro();
     do{
@@ -151,3 +150,4 @@ void intro(){
 
     //         }
 
+//if(vhmit.first : vhm.end()){printf("same");}
