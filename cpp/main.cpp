@@ -23,7 +23,7 @@ int main(int argc, const char* argv[])
     }
     //hashmap declare
     Enp_HashMap Enp_HM;
-   // unordered_map<pair<string,string>,vector<uint32_t>> Cov_HM; //compile error
+   // unordered_map<pairvi<string,string>,vector<uint32_t>> Cov_HM; //compile error
     Cov_HashMap Cov_HM; //compile success!
 
     while (true){ // main_process
