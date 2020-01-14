@@ -5,25 +5,25 @@ void EnpSrc_stat(Enp_HashMap & Enp_HM, string key, uint pac_len)
 {
     if(!Enp_HM.count(key)){//"count()" is more convenient than "find()"!
         Enp_HM[key] = vector <uint32_t> {0,0,0,0};
-        Enp_HM[key][0]+= 1;
-        Enp_HM[key][1]+= pac_len;
+        Enp_HM[key][tx_pac]+= 1;
+        Enp_HM[key][tx_byte]+= pac_len;
     }
     else {
 
-        Enp_HM[key][0]+= 1;
-        Enp_HM[key][1]+= pac_len;
+        Enp_HM[key][tx_pac]+= 1;
+        Enp_HM[key][tx_byte]+= pac_len;
     }
 }
 void EnpDst_stat(Enp_HashMap & Enp_HM, string key, uint pac_len) //struct pcap_pkthdr* cap_pac
 {
     if(!Enp_HM.count(key)){
         Enp_HM[key] = vector <uint32_t> {0,0,0,0};
-        Enp_HM[key][2]+= 1;
-        Enp_HM[key][3]+= pac_len;
+        Enp_HM[key][rx_pac]+= 1;
+        Enp_HM[key][rx_byte]+= pac_len;
     }
     else {
-        Enp_HM[key][2]+= 1;
-        Enp_HM[key][3]+= pac_len;
+        Enp_HM[key][rx_pac]+= 1;
+        Enp_HM[key][rx_byte]+= pac_len;
     }
 }
 void Cov_stat(Cov_HashMap & Cov_HM, string A, string B, uint pac_len)
@@ -33,18 +33,20 @@ void Cov_stat(Cov_HashMap & Cov_HM, string A, string B, uint pac_len)
     uint8_t check_sd = Cov_HM.count(kp_sd);
     uint8_t check_ds = Cov_HM.count(kp_ds);
 
+    // Use sort() implement!
+
     if (check_sd == 0 && check_ds ==0){
         Cov_HM[kp_sd] = vector <uint32_t> {0,0,0,0};
-        Cov_HM[kp_sd][0]+= 1;
-        Cov_HM[kp_sd][1]+= pac_len;
+        Cov_HM[kp_sd][tx_pac]+= 1;
+        Cov_HM[kp_sd][tx_byte]+= pac_len;
     }
     else if(check_sd != 0 && check_ds == 0){
-        Cov_HM[kp_sd][0]+= 1;
-        Cov_HM[kp_sd][1]+= pac_len;
+        Cov_HM[kp_sd][tx_pac]+= 1;
+        Cov_HM[kp_sd][tx_byte]+= pac_len;
     }
     else{ //(check_sd == 0 && check_ds != 0)
-            Cov_HM[kp_ds][2]+= 1;
-            Cov_HM[kp_ds][3]+= pac_len;
+            Cov_HM[kp_ds][rx_pac]+= 1;
+            Cov_HM[kp_ds][rx_byte]+= pac_len;
     }
 }
 [[noreturn]]void stat_print(Enp_HashMap Enp_HM, Cov_HashMap Cov_HM){

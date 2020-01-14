@@ -25,6 +25,7 @@ int main(int argc, const char* argv[])
     Enp_HashMap Enp_HM;
    // unordered_map<pairvi<string,string>,vector<uint32_t>> Cov_HM; //compile error
     Cov_HashMap Cov_HM; //compile success!
+    uint16_t eth_tp;
 
     while (true){ // main_process
         int res = pcap_next_ex(handle, &header, &packet);
@@ -32,15 +33,15 @@ int main(int argc, const char* argv[])
         if (res == -1 || res == -2) // -1 error / -2 eof
           break;
 
-        uint16_t eth_type = uint16_t((packet[12]<<8)|packet[13]);
+        memcpy(&eth_tp,&packet[eth_tp_idx],sizeof (eth_tp));
         uint pac_len = header->len;
         //calculate Ethernet Statistical data
         Eth_stat(Enp_HM,Cov_HM,pac_len, packet);
         //calculate Ivp4 Statistical data
-        if(eth_type == ip4_type) Ip_stat(Enp_HM,Cov_HM,pac_len,packet);
+        if(eth_tp == ip4_type) Ip_stat(Enp_HM,Cov_HM,pac_len,packet);
         }
     free(header); free((u_char *)packet); free(handle);
-    header =nullptr; packet =nullptr; handle =nullptr;
+//    header =nullptr; packet =nullptr; handle =nullptr; //if it merge other program. it is Safe.
 
     //print result
     stat_print(Enp_HM,Cov_HM);
