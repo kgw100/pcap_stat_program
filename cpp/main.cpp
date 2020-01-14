@@ -12,9 +12,9 @@ int main(int argc, const char* argv[])
         }
     char errbuf[PCAP_ERRBUF_SIZE];
     const char* file_name = argv[1];
-    pcap_t * handle = (pcap_t *)malloc(sizeof(pcap_t *));
-    pcap_pkthdr* header= (pcap_pkthdr *)malloc(sizeof(pcap_pkthdr));
-    const u_char* packet =(u_char *)malloc(sizeof(u_char));
+    pcap_t * handle = static_cast<pcap_t *>(malloc(sizeof(pcap_t *)));
+    pcap_pkthdr* header= static_cast<pcap_pkthdr *>(malloc(sizeof(pcap_pkthdr)));
+    const u_char* packet =static_cast<u_char *>(malloc(sizeof(u_char)));
 
     handle = pcap_open_offline(argv[1],errbuf);
     if (handle == nullptr){  //file open error
@@ -39,7 +39,7 @@ int main(int argc, const char* argv[])
         //calculate Ivp4 Statistical data
         if(eth_type == ip4_type) Ip_stat(Enp_HM,Cov_HM,pac_len,packet);
         }
-    free(header); free((void *)packet); free(handle);
+    free(header); free((u_char *)packet); free(handle);
     header =nullptr; packet =nullptr; handle =nullptr;
 
     //print result

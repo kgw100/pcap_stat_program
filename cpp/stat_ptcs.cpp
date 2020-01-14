@@ -6,7 +6,8 @@
 void Eth_stat(Enp_HashMap & Enp_HM, Cov_HashMap & Cov_HM,uint pac_len, const u_char * packet)
 {
     size_t outsz= 3*mac_addrSize;
-    char s_mac[outsz], d_mac[outsz];
+    char * s_mac = static_cast<char *>(malloc(sizeof(char)*outsz));
+    char * d_mac = static_cast<char *>(malloc(sizeof(char)*outsz));
     // Get mac_address
     tohex(&packet[0],sizeof(packet),d_mac,outsz); //u_char array to hex string
     tohex(&packet[6],sizeof(packet),s_mac,outsz); //u_char array to hex string
@@ -20,8 +21,8 @@ void Ip_stat(Enp_HashMap & Enp_HM, Cov_HashMap & Cov_HM,uint pac_len, const u_ch
 {
      in_addr sip, tip;
      string sender_ip, target_ip;
-     sip.s_addr = static_cast<uint32_t>(htonl((packet[26]<<24 )| (packet[27]<<16)| (packet[28] <<8)| packet[29]));
-     tip.s_addr = static_cast<uint32_t>(htonl((packet[30]<<24 )| (packet[31]<<16)| (packet[32] <<8)| packet[33]));
+     sip.s_addr = htonl(static_cast<uint32_t>((packet[26]<<24 )| (packet[27]<<16)| (packet[28] <<8)| packet[29]));
+     tip.s_addr = htonl(static_cast<uint32_t>((packet[30]<<24 )| (packet[31]<<16)| (packet[32] <<8)| packet[33]));
      sender_ip = string(inet_ntoa(sip));
      target_ip = string(inet_ntoa(tip));
      // Endpoint ip4 statistic

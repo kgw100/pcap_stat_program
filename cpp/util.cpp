@@ -15,7 +15,7 @@ void tohex(const u_char * in, size_t insz, char * out, size_t outsz)
         pout[0] = hex[(*pin>>4)&0xF];
         pout[1] = hex[*pin & 0XF];
         pout[2] = ':';
-        if(pout + 3- out > outsz){
+        if((pout + 3 - out) > static_cast<long>(outsz)){
             break; //prevent buffer overflow
         }
     }
