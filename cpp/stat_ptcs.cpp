@@ -23,7 +23,7 @@ void Ip_stat(Enp_HashMap & Enp_HM, Cov_HashMap & Cov_HM,uint pac_len, const u_ch
      string sender_ip, target_ip;
      mempcpy(&(sip).s_addr,&packet[sip_idx],sizeof (sip.s_addr));
      mempcpy(&(tip).s_addr,&packet[dip_idx],sizeof (tip.s_addr));
-//     sip.s_addr = htonl(static_cast<uint32_t>((packet[26]<<24 )| (packet[27]<<16)| (packet[28] <<8)| packet[29]));
+     sip.s_addr = htonl(static_cast<uint32_t>((packet[26]<<24 )| (packet[27]<<16)| (packet[28] <<8)| packet[29]));
 //     tip.s_addr = htonl(static_cast<uint32_t>((packet[30]<<24 )| (packet[31]<<16)| (packet[32] <<8)| packet[33]));
      sender_ip = string(inet_ntoa(sip));
      target_ip = string(inet_ntoa(tip));

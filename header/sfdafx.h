@@ -30,19 +30,27 @@ struct pair_hash {
     template<class T1, class T2>
     size_t operator () (const pair<T1,T2> &p) const{
         uint poly = 0xEDB8320;
-        int len = p.first.Length;
-
+        int len = p.first.size();
         auto h1 = hash<T1>{}(p.first);
         auto h2 = hash<T2>{}(p.second);
+
 //        return h1 ^ h2; //original
 //        return h1 ^ (h2 << 1); // hash collsion improving
         for(int i =0; i<len; i++){
             poly = (poly <<1)| (poly >>(32-1));
-            h1 = static_cast<int>(poly * h1 + p.first);
-            h2 = static_cast<int>(poly * h2 + p.second);
+            h1 = poly * h1 +p.first[i];
+            h2 = poly * h2 + p.second[i];
+
         }
+
         return h1 ^ h2;
     }
+//    string operator + (string _str) const{
+//        string result;
+//        strcpy(result,_str);
+
+//    }
+
 };
 
 using key_pair = pair<string,string>;
